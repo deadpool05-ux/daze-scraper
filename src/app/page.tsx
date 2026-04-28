@@ -14,6 +14,11 @@ export default function Home() {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [draftError, setDraftError] = useState<string | null>(null);
 
+  // AI Inbound Post States
+  const [generatingPost, setGeneratingPost] = useState(false);
+  const [generatedPostData, setGeneratedPostData] = useState<{title: string, body: string, suggestedSubreddit?: string} | null>(null);
+  const [generatePostError, setGeneratePostError] = useState<string | null>(null);
+
   const KEYWORDS = [
     // Pain / Intent Signals
     'budget', 'cost', 'expensive', 'slow', 'looking for', 'need help', 'aws', 
@@ -104,6 +109,30 @@ export default function Home() {
 
   const qualifiedPosts = posts.filter(post => post.matchCount >= minMatches);
 
+  const generateViralPost = async () => {
+    if (qualifiedPosts.length === 0) return;
+    setGeneratingPost(true);
+    setGeneratePostError(null);
+    setGeneratedPostData(null);
+    try {
+      const res = await fetch('/api/generate-post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          posts: qualifiedPosts.slice(0, 10).map(p => ({ title: p.title, selftext: p.selftext })),
+          layer
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to generate post');
+      setGeneratedPostData(data);
+    } catch (err: any) {
+      setGeneratePostError(err.message);
+    } finally {
+      setGeneratingPost(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-gray-100 p-8 font-sans selection:bg-emerald-400 selection:text-black">
       <header className="mb-10 max-w-5xl mx-auto flex items-center justify-between border-b border-gray-800 pb-6">
@@ -133,8 +162,49 @@ export default function Home() {
           >
             {loading ? 'Scanning...' : 'Refresh Signals'}
           </button>
+          <button 
+            onClick={generateViralPost} 
+            disabled={generatingPost || qualifiedPosts.length === 0}
+            className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/50 px-4 py-2 rounded-md text-xs uppercase tracking-wider font-bold transition-all disabled:opacity-50"
+          >
+            {generatingPost ? 'Writing...' : 'Generate Viral Post'}
+          </button>
         </div>
       </header>
+
+      {/* Generated Post Modal/Section */}
+      {generatePostError && (
+        <div className="max-w-5xl mx-auto mb-6 bg-red-900/50 text-red-400 p-4 rounded-md text-sm border border-red-700">
+          Failed to generate post: {generatePostError}
+        </div>
+      )}
+      {generatedPostData && (
+        <div className="max-w-5xl mx-auto mb-8 bg-[#0a0a0a] border border-purple-500/50 p-6 rounded-lg shadow-[0_0_30px_rgba(168,85,247,0.1)]">
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h2 className="text-sm uppercase tracking-wider font-bold text-purple-400">Inbound Authority Post Generated</h2>
+              {generatedPostData.suggestedSubreddit && (
+                <div className="text-xs font-mono text-emerald-400 mt-1">Suggested Subreddit: {generatedPostData.suggestedSubreddit}</div>
+              )}
+            </div>
+            <button 
+              onClick={() => navigator.clipboard.writeText(`${generatedPostData.title}\n\n${generatedPostData.body}`)}
+              className="text-xs uppercase tracking-wider font-bold bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 px-3 py-1.5 rounded transition-colors"
+            >
+              Copy Full Post
+            </button>
+          </div>
+          <div className="mb-4">
+            <h3 className="text-xl font-bold text-white mb-2">{generatedPostData.title}</h3>
+            <div className="text-sm text-gray-300 font-mono whitespace-pre-wrap leading-relaxed bg-black p-4 rounded border border-gray-800">
+              {generatedPostData.body}
+            </div>
+          </div>
+          <div className="text-xs text-gray-500 italic">
+            Based on the pain points from the top signals in this layer.
+          </div>
+        </div>
+      )}
 
       <main className="max-w-5xl mx-auto flex gap-8">
         <div className="w-64 shrink-0 flex flex-col gap-2">
