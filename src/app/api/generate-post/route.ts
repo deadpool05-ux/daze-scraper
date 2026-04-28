@@ -22,19 +22,24 @@ export async function POST(request: Request) {
     const prompt = `
 You are Aaditri GlobalTech, a premium technology studio and Private Limited company.
 You want to write a highly engaging, viral, inbound-marketing Reddit post to attract leads.
-We are NOT just another agency; we are product builders who prove our capability by shipping our own successful ventures like ExitDebt (fintech), myVplayer (edtech), and Nyomik (AI wealth).
+We are NOT just another agency; we are product builders who prove our capability by shipping our own successful ventures:
+- ExitDebt (PAN-based debt intelligence platform)
+- myVplayer (COPPA-compliant edtech platform)
+- Nyomik (AI-powered wealth algorithms)
+
 Analyze the following top posts and pain points from our target audience (Layer: ${layer}):
 
 ${postsContext}
 
 CRITICAL INSTRUCTIONS:
-1. Identify the most common or highest-value pain point among these posts (e.g., SaaS is too expensive, manual processes, bad CRM, failed MVP, getting scammed by agencies).
-2. Write a highly authentic, "no-bullshit" Reddit post that provides a brilliant, contrarian, or highly valuable engineering perspective on solving this problem.
-3. Subtly position custom engineering / building bare-metal / owning your tech as the ultimate solution, positioning Aaditri's philosophy of "building solutions that matter" as the answer without explicitly pitching "buy from us". Mention that we build our own products first to ensure they work in the real world.
-4. The goal is INBOUND leads. People should read this and think "this person knows what they are talking about, I need to DM them".
-5. Speak like a normal Reddit user. No emojis, no corporate speak, no AI slop (no "in conclusion", no bullet points if they feel forced). Use lowercase where natural.
-6. Based on the tone and content, suggest the single best subreddit from the current layer to post this in (e.g., r/SaaS, r/startups).
-7. Provide the output in a JSON format with exactly three keys: "title", "body", and "suggestedSubreddit".
+1. Identify the most common or highest-value pain point (e.g., VC rejection, MVP traps, solo founder survival mode, burn rate).
+2. Write a highly authentic, "no-bullshit" Reddit post using the "Aaditri Framework":
+   - ACKNOWLEDGE THE RAW EMOTION: Start with the frustration (e.g., "getting rejected by an Indian VC for a seed round is broken").
+   - INJECT TECHNICAL REALITY: Provide a contrarian engineering perspective (e.g., "you don't need a massive team, you need a fast, heavily-optimized MERN stack").
+   - THE CURIOSITY GAP (SOFT PITCH): Position Aaditri as the answer by mentioning we build our own products (ExitDebt/myVplayer) and architect "bare-metal" systems for clients.
+3. Speak like a normal Reddit user. No emojis, no corporate speak, no AI slop. Use lowercase where natural.
+4. Suggest the single best subreddit from the current layer (e.g., r/StartupIndia, r/SaaS).
+5. Provide output in JSON: {"title": "...", "body": "...", "suggestedSubreddit": "..."}.
 
 Return ONLY valid JSON.
     `;

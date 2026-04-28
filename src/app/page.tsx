@@ -25,16 +25,18 @@ export default function Home() {
     'budget', 'cost', 'expensive', 'slow', 'looking for', 'need help', 'aws', 
     'burn rate', 'technical debt', 'runway', 'struggling', 'stuck', 'hiring', 
     'hire', 'freelancer', 'agency', 'founder', 'co-founder', 'cofounder',
-    // Core Dazeco Solutions
+    // Core Solutions & Products
+    'exitdebt', 'myvplayer', 'nyomik', 'fintech', 'edtech', 'wealth tech',
     'mvp', 'automation', 'crm', 'ai', 'dashboard', 'custom', 'automated', 
-    'engine', 'product', 'business', 'script',
+    'engine', 'product', 'business', 'script', 'pan-based', 'credit scoring',
+    'debt settlement', 'compliance', 'coppa', 'gdpr', 'sebi',
     // Tech & Roles
     'developer', 'software', 'website', 'site', 'dev', 'security', 'backend', 
     'frontend', 'mern', 'fullstack', 'full-stack', 'ui ux', 'ui/ux', 'graphics', 
     'ci cd', 'ci/cd', 'deployment', 'cloud', 'infra', 'infrastructure', 'build', 
     'database', 'python', 'vercel', 'netlify', 'shopify', 'wordpress', 'wix', 
     'next.js', 'react', 'pytorch', 'api', 'scraping', 'machine learning', 'ml',
-    'tech', 'technical'
+    'tech', 'technical', 'aws', 'gcp', 'docker'
   ];
 
   const fetchPosts = async () => {
