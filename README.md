@@ -1,8 +1,8 @@
-# Daze Signal Engine
+# Aaditri Signal Engine
 
-Automated Client Acquisition & High-Intent Scraping for Dazeco.
+Automated Client Acquisition & High-Intent Scraping for Aaditri GlobalTech.
 
-![Daze Signal Engine](public/dazelogo.png)
+![Aaditri GlobalTech](https://aaditriglobaltech.com/favicon.ico)
 
 ## Quick Start
 1. `npm install`
@@ -21,4 +21,4 @@ For detailed information, please refer to the `docs` folder:
 [GitHub Repository](https://github.com/deadpool05-ux/daze-scraper)
 
 ---
-© 2026 Dazeco. Built for elite custom engineering.
+© 2026 Aaditri GlobalTech Private Limited. Built with precision by product builders.

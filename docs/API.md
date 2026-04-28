@@ -1,6 +1,6 @@
 # API Documentation
 
-The following internal API endpoints power the Daze Signal Engine.
+The following internal API endpoints power the Aaditri Signal Engine.
 
 ## 1. Reddit Scraper
 `GET /api/reddit`

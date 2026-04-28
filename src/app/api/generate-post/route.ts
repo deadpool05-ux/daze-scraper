@@ -20,8 +20,9 @@ export async function POST(request: Request) {
     const postsContext = posts.map((p: any, i: number) => `Post ${i+1}:\nTitle: ${p.title}\nContent: ${p.selftext}`).join('\n\n');
 
     const prompt = `
-You are Dazeco, an elite custom software and AI development agency.
+You are Aaditri GlobalTech, a premium technology studio and Private Limited company.
 You want to write a highly engaging, viral, inbound-marketing Reddit post to attract leads.
+We are NOT just another agency; we are product builders who prove our capability by shipping our own successful ventures like ExitDebt (fintech), myVplayer (edtech), and Nyomik (AI wealth).
 Analyze the following top posts and pain points from our target audience (Layer: ${layer}):
 
 ${postsContext}
@@ -29,7 +30,7 @@ ${postsContext}
 CRITICAL INSTRUCTIONS:
 1. Identify the most common or highest-value pain point among these posts (e.g., SaaS is too expensive, manual processes, bad CRM, failed MVP, getting scammed by agencies).
 2. Write a highly authentic, "no-bullshit" Reddit post that provides a brilliant, contrarian, or highly valuable engineering perspective on solving this problem.
-3. Subtly position custom engineering / building bare-metal / owning your tech as the ultimate solution, positioning Dazeco's philosophy as the answer without explicitly pitching "buy from us".
+3. Subtly position custom engineering / building bare-metal / owning your tech as the ultimate solution, positioning Aaditri's philosophy of "building solutions that matter" as the answer without explicitly pitching "buy from us". Mention that we build our own products first to ensure they work in the real world.
 4. The goal is INBOUND leads. People should read this and think "this person knows what they are talking about, I need to DM them".
 5. Speak like a normal Reddit user. No emojis, no corporate speak, no AI slop (no "in conclusion", no bullet points if they feel forced). Use lowercase where natural.
 6. Based on the tone and content, suggest the single best subreddit from the current layer to post this in (e.g., r/SaaS, r/startups).

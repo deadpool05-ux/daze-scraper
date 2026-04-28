@@ -1,6 +1,6 @@
 # Technical Architecture
 
-The Daze Signal Engine is built as a modern Next.js application using React (Frontend) and API Routes (Backend).
+The Aaditri Signal Engine is built as a modern Next.js application using React (Frontend) and API Routes (Backend).
 
 ## Data Flow
 
@@ -18,7 +18,7 @@ The Daze Signal Engine is built as a modern Next.js application using React (Fro
 3. **AI Generation Layer (`/api/draft` & `/api/generate-post`)**:
    - **Service Selection**: The backend checks for `GEMINI_API_KEY`. If present, it initializes the Gemini 2.5 Flash model.
    - **Fallback Mechanism**: If Gemini fails or the key is missing, it automatically switches to the Groq API using the `llama-3.3-70b-versatile` model.
-   - **Contextual Injection**: Relevant post data (titles, bodies) is injected into specialized prompts designed for the "Dazeco Voice".
+   - **Contextual Injection**: Relevant post data (titles, bodies) is injected into specialized prompts designed for the "Aaditri Voice".
 
 ## Frontend Components
 - **Lead Layers Sidebar**: Navigation for different scraping targets.

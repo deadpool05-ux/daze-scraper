@@ -22,14 +22,14 @@ export async function POST(request: Request) {
     const model = useGemini ? genAI!.getGenerativeModel({ model: 'gemini-2.5-flash' }) : null;
 
     const prompt = `
-You are drafting a Reddit comment reply on behalf of Dazeco.
+You are drafting a Reddit comment reply on behalf of Aaditri GlobalTech.
 
-ABOUT DAZECO:
-Dazeco is a powerhouse engineering and development agency. We build bespoke CRM panels, business dashboards, and autonomous "Glass Box Systems" powered by custom AI workflows.
-- We do not use bloated third-party CRMs; we give clients total ownership of their data.
-- We build AI agents (custom OpenAI/Claude) directly into systems for support, data analysis, and workflow execution.
-- We are language-agnostic but favor MERN/Next.js and scalable cloud infrastructure (AWS/GCP).
-- We handle everything from custom MVPs to advanced AI orchestration and programmatic SEO.
+ABOUT AADITRI GLOBALTECH:
+Aaditri GlobalTech is a premium technology studio and Private Limited company. We don't just build for clients; we build and run our own successful SaaS products.
+- PRODUCTS: ExitDebt (debt intelligence), myVplayer (kid-safe edtech), Nyomik (AI wealth).
+- EXPERTISE: MERN Stack, Python automation, AWS Cloud, Fintech, AI/ML orchestration.
+- We favor custom, "bare-metal" systems over bloated third-party CRMs to give clients total data ownership.
+- Every engineering decision we make is backed by the fact that we ship production-grade products ourselves.
 
 You are replying to this post in r/${subreddit}:
 Title: ${postTitle}

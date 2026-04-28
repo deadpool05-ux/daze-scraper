@@ -139,8 +139,8 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <img src="/dazelogo.png" alt="Daze Logo" className="w-14 h-14 object-contain rounded" />
           <div>
-            <h1 className="text-3xl font-bold tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">Daze <span className="text-emerald-400 font-mono">Signal_Engine</span></h1>
-            <p className="text-gray-400 mt-1 text-[10px] uppercase tracking-[0.2em] font-bold">Automated Client Acquisition & Intent Scraping</p>
+            <h1 className="text-3xl font-bold tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">Aaditri <span className="text-emerald-400 font-mono">Signal_Engine</span></h1>
+            <p className="text-gray-400 mt-1 text-[10px] uppercase tracking-[0.2em] font-bold">Automated Client Acquisition — Aaditri GlobalTech Pvt Ltd</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -262,7 +262,7 @@ export default function Home() {
                 {drafts[post.id] && (
                   <div className="mt-4 mb-4 p-4 bg-black rounded border border-gray-700">
                     <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-bold flex justify-between">
-                      <span>Generated Reply (Dazeco Voice)</span>
+                      <span>Generated Reply (Aaditri Voice)</span>
                       <button 
                         onClick={() => navigator.clipboard.writeText(drafts[post.id])}
                         className="text-emerald-400 hover:text-emerald-300 transition-colors"
