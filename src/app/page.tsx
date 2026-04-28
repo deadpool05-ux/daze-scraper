@@ -8,6 +8,7 @@ export default function Home() {
   const [layer, setLayer] = useState('direct');
   const [error, setError] = useState<string | null>(null);
   const [minMatches, setMinMatches] = useState<number>(2); // Default criteria
+  const [manualKeywords, setManualKeywords] = useState<string>(''); // User-defined keywords
 
   // AI Drafting States
   const [draftingPostId, setDraftingPostId] = useState<string | null>(null);
@@ -45,18 +46,7 @@ export default function Home() {
       const data = await res.json();
       if (data.data?.children) {
         const rawPosts = data.data.children.map((child: any) => {
-          const post = child.data;
-          const textToSearch = `${post.title || ''} ${post.selftext || ''}`.toLowerCase();
-          
-          let matchCount = 0;
-          KEYWORDS.forEach(kw => {
-            const regex = new RegExp(`\\b${kw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
-            if (regex.test(textToSearch)) {
-              matchCount++;
-            }
-          });
-
-          return { ...post, matchCount };
+          return { ...child.data };
         });
 
         setPosts(rawPosts);
@@ -75,7 +65,10 @@ export default function Home() {
   const highlightKeywords = (text: string) => {
     if (!text) return '';
     let highlightedText = text;
-    KEYWORDS.forEach(kw => {
+    const customKws = manualKeywords.split(',').map(k => k.trim()).filter(k => k !== '');
+    const allKws = [...KEYWORDS, ...customKws];
+
+    allKws.forEach(kw => {
       const escapedKw = kw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       const regex = new RegExp(`(\\b${escapedKw}\\b)`, 'gi');
       highlightedText = highlightedText.replace(regex, '<mark class="bg-yellow-200 text-black px-1 rounded font-semibold">$1</mark>');
@@ -107,7 +100,22 @@ export default function Home() {
     }
   };
 
-  const qualifiedPosts = posts.filter(post => post.matchCount >= minMatches);
+  const scoredPosts = posts.map(post => {
+    const textToSearch = `${post.title || ''} ${post.selftext || ''}`.toLowerCase();
+    let matchCount = 0;
+    const customKws = manualKeywords.split(',').map(k => k.trim()).filter(k => k !== '');
+    const allKws = [...KEYWORDS, ...customKws];
+
+    allKws.forEach(kw => {
+      const regex = new RegExp(`\\b${kw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
+      if (regex.test(textToSearch)) {
+        matchCount++;
+      }
+    });
+    return { ...post, matchCount };
+  });
+
+  const qualifiedPosts = scoredPosts.filter(post => post.matchCount >= minMatches);
 
   const generateViralPost = async () => {
     if (qualifiedPosts.length === 0) return;
@@ -144,15 +152,25 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-gray-900 border border-gray-700 rounded-md px-3 py-1.5 focus-within:border-emerald-500 transition-colors">
+            <span className="text-xs text-gray-500 font-bold uppercase tracking-tighter">Filter:</span>
+            <input 
+              type="text" 
+              placeholder="e.g. react, shopify, api"
+              value={manualKeywords}
+              onChange={(e) => setManualKeywords(e.target.value)}
+              className="bg-transparent border-none text-xs text-emerald-400 placeholder:text-gray-600 focus:ring-0 w-48 font-mono"
+            />
+          </div>
           <div className="flex items-center gap-2 bg-gray-800 px-3 py-1.5 rounded-md border border-gray-700">
-            <span className="text-xs text-gray-400 font-medium">Min Keywords:</span>
+            <span className="text-xs text-gray-400 font-medium whitespace-nowrap">Min Key:</span>
             <input 
               type="number" 
               min="0" 
               max="10"
               value={minMatches} 
               onChange={(e) => setMinMatches(Number(e.target.value))}
-              className="w-12 bg-gray-900 text-emerald-400 font-bold text-center border-none focus:ring-1 focus:ring-emerald-500 rounded px-1"
+              className="w-10 bg-gray-900 text-emerald-400 font-bold text-center border-none focus:ring-1 focus:ring-emerald-500 rounded px-1"
             />
           </div>
           <button 
@@ -160,14 +178,14 @@ export default function Home() {
             disabled={loading}
             className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 px-4 py-2 rounded-md text-xs uppercase tracking-wider font-bold transition-all disabled:opacity-50"
           >
-            {loading ? 'Scanning...' : 'Refresh Signals'}
+            {loading ? 'Scanning...' : 'Refresh'}
           </button>
           <button 
             onClick={generateViralPost} 
             disabled={generatingPost || qualifiedPosts.length === 0}
             className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/50 px-4 py-2 rounded-md text-xs uppercase tracking-wider font-bold transition-all disabled:opacity-50"
           >
-            {generatingPost ? 'Writing...' : 'Generate Viral Post'}
+            {generatingPost ? 'Writing...' : 'Viral Post'}
           </button>
         </div>
       </header>
